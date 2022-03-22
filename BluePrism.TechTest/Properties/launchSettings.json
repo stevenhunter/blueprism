@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "BluePrism.TechTest": {
+      "commandName": "Project",
+      "commandLineArgs": "-d words-english.txt -s spin -e spot -o output.txt"
+    }
+  }
+}
