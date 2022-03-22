@@ -1,7 +1,8 @@
-using Xunit;
+﻿using FluentAssertions;
+using Moq;
 using System;
-using FluentAssertions;
 using System.Diagnostics.CodeAnalysis;
+using Xunit;
 using BluePrism.TechTest.Library.Models;
 using AutoFixture.Xunit2;
 
@@ -13,26 +14,18 @@ namespace BluePrism.TechTest.Library.UnitTests.Models
         [Theory, AutoData]
         public void Ctor_GivenValidArguments_DoesNotThrow(string word)
         {
-            Node? node = null;
+            var act = new Action(() => _ = new Node(word));
 
-            var func = new Func<Node>(() => node = new Node(word, null));
-
-            func.Should().NotThrow();
-
-            node?.Word.Should().Be(word);
-            node?.Parent.Should().BeNull();
+            act.Should().NotThrow();
         }
-        
-        [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData(" ")]
-        public void Ctor_GivenInvalidWord_ThrowsArgumentNullException(string word)
+
+        [Fact]
+        public void Ctor_GivenNullWord_ThrowsArgumentNullException()
         {
-            Action act = () => _ = new Node(word, null);
+            var act = new Action(() => _ = new Node(null));
 
             act.Should().Throw<ArgumentNullException>()
-                .WithMessage("Value cannot be null, empty or whitespace (Parameter 'word')");
+                .WithMessage("Value cannot be null. (Parameter 'word')");
         }
     }
 }

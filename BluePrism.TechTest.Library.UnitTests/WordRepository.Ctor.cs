@@ -8,12 +8,12 @@ using Xunit;
 namespace BluePrism.TechTest.Library.UnitTests
 {
     [ExcludeFromCodeCoverage]
-    public partial class WordListTests
+    public partial class WordRepositoryTests
     {
         [Fact]
         public void Ctor_GivenValidArguments_DoesNotThrow()
         {
-            var act = new Action(() => _ = new WordList(Mock.Of<IFileSystem>()));
+            var act = new Action(() => _ = new WordRepository(Mock.Of<IFileSystem>()));
 
             act.Should().NotThrow();
         }
@@ -21,7 +21,7 @@ namespace BluePrism.TechTest.Library.UnitTests
         [Fact]
         public void Ctor_GivenNullFileSystem_ThrowsArgumentNullException()
         {
-            var act = new Action(() => _ = new WordList(null));
+            var act = new Action(() => _ = new WordRepository(null));
 
             act.Should().Throw<ArgumentNullException>()
                 .WithMessage("Value cannot be null. (Parameter 'fileSystem')");

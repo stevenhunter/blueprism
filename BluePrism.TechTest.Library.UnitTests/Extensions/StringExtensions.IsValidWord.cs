@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace BluePrism.TechTest.Library.UnitTests.Extensions
 {
     [ExcludeFromCodeCoverage]
-    public class StringExtensionsTests
+    public partial class StringExtensionsTests
     {
         [Theory]
         [InlineData(0)]

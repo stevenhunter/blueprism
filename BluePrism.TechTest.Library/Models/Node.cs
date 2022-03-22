@@ -2,17 +2,15 @@
 {
     public class Node
     {
-        public string Word { get;  }
-
-        public Node? Parent { get; }
-
-        public Node(string word, Node? parent)
+        public Node(string word)
         {
-            if (string.IsNullOrWhiteSpace(word)) 
-                throw new ArgumentNullException(nameof(word), "Value cannot be null, empty or whitespace");
-
+            if (string.IsNullOrWhiteSpace(word)) throw new ArgumentNullException(nameof(word));
+            
             Word = word;
-            Parent = parent;
         }
+
+        public string Word { get; init; }
+
+        public Node? Parent { get; init; }
     }
 }
