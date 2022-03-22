@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using CommandLine;
 using BluePrism.TechTest.Console;
 using BluePrism.TechTest.Library;
+using System.IO.Abstractions;
 
 var parserResult = Parser.Default.ParseArguments<Options>(args);
 await parserResult.WithParsedAsync(RunOptionsAsync);
@@ -15,32 +16,37 @@ static async Task RunOptionsAsync(Options options)
         $"Running with arguments: -d {options.Dictionary} -s {options.StartWord} -e {options.EndWord} -o {options.Output}");
 
     IServiceProvider serviceProvider = new ServiceCollection()
+        .AddTransient<IFileSystem, FileSystem>()
         .AddSingleton<IWordList, WordList>()
-        .AddTransient<IFileManager, FileManager>()
-        //.AddTransient<IWordValidator, WordValidator>()
         .AddTransient<IPathFinder, PathFinder>()
         .BuildServiceProvider();
     
-    ValidateArgs(options, serviceProvider.GetRequiredService<IFileManager>());
+    ValidateArgs(options);
     
     var wordDictionary = serviceProvider.GetRequiredService<IWordList>();
     var pathFinder = serviceProvider.GetRequiredService<IPathFinder>();
 
-    var words = await wordDictionary.ReadFromFileAsync(options.Dictionary, options.StartWord.Length);
+    try
+    {
+        var words = await wordDictionary.ReadFromFileAsync(options.Dictionary, options.StartWord.Length);
 
-    var shortestPath = pathFinder.FindShortestPath(words, options.StartWord, options.EndWord);
+        var shortestPath = pathFinder.FindShortestPath(words, options.StartWord, options.EndWord);
 
-    //Generate output
+        //Generate output
 
-    //remove this???
+
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+        Environment.Exit(1);
+    }
+
     Environment.Exit(0);
 }
 
-static void ValidateArgs(Options options, IFileManager fileManager)
+static void ValidateArgs(Options options)
 {
-    if (!fileManager.FileExists(options.Dictionary))
-        throw new FileNotFoundException($"Dictionary file not found at: {options.Dictionary}");
-
     if (options.StartWord.Length != options.EndWord.Length)
         throw new ArgumentException("Start and end words must be of equal length");
 }

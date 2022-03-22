@@ -1,7 +1,8 @@
-﻿using BluePrism.TechTest.Library.Exceptions;
-using BluePrism.TechTest.Library.Interfaces;
+﻿using BluePrism.TechTest.Library.Interfaces;
 using System.Collections.Concurrent;
 using BluePrism.TechTest.Library.Extensions;
+using System.IO.Abstractions;
+using BluePrism.TechTest.Library.Exceptions;
 
 namespace BluePrism.TechTest.Library
 {
@@ -9,25 +10,30 @@ namespace BluePrism.TechTest.Library
     {
         private const string Alphabet = "abcdefghijklmnopqrstuvwxyz";
 
-        private readonly IFileManager _fileManager;
+        private readonly IFileSystem _fileSystem;
 
-        public WordList(IFileManager fileManager)
+        public WordList(IFileSystem fileSystem)
         {
-            _fileManager = fileManager ?? throw new ArgumentNullException(nameof(fileManager)); ;
+            _fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem)); ;
         }
         
         public async Task<string[]> ReadFromFileAsync(string path, int wordLength)
         {
             var words = new List<string>();
-            
-            ValidateFilePath(path);
 
-            using var streamReader = _fileManager.StreamReader(path);
-            
-            string? line;
-            while ((line = await streamReader.ReadLineAsync()) != null)
+            try
             {
-                if (line.IsValidWord(wordLength)) words.Add(line);
+                using var streamReader = _fileSystem.File.OpenText(path);
+
+                string? line;
+                while ((line = await streamReader.ReadLineAsync()) != null)
+                {
+                    if (line.IsValidWord(wordLength)) words.Add(line);
+                }
+            }
+            catch(FileNotFoundException ex)
+            {
+                throw new DictionaryFileNotFoundException($"Unable to load dictionary file with name '{path}' at current location", ex);
             }
 
             return words.ToArray();
@@ -58,15 +64,6 @@ namespace BluePrism.TechTest.Library
             });
 
             return similarWords.ToArray();
-        }
-
-        private void ValidateFilePath(string path)
-        {
-            if (string.IsNullOrWhiteSpace(path)) 
-                throw new ArgumentOutOfRangeException(nameof(path));
-
-            if (!_fileManager.FileExists(path)) 
-                throw new DictionaryFileNotFoundException($"File not found at path: {path}");
         }
     }
 }
