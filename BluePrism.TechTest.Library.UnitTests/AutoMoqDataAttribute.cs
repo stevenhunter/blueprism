@@ -2,16 +2,13 @@
 using AutoFixture.AutoMoq;
 using AutoFixture.Xunit2;
 
-namespace BluePrism.TechTest.Library.UnitTests
+namespace BluePrism.TechTest.Library.UnitTests;
+
+public class AutoMoqDataAttribute : AutoDataAttribute
 {
-    public class AutoMoqDataAttribute : AutoDataAttribute
+    public AutoMoqDataAttribute() : base(() => 
+        new Fixture().Customize(new CompositeCustomization(
+        new AutoMoqCustomization())))
     {
-        public AutoMoqDataAttribute() : base(() =>
-        {
-            return new Fixture().Customize(new CompositeCustomization(
-                new AutoMoqCustomization()));
-        })
-        {
-        }
     }
 }

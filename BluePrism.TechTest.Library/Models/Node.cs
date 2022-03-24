@@ -1,16 +1,15 @@
-﻿namespace BluePrism.TechTest.Library.Models
+﻿namespace BluePrism.TechTest.Library.Models;
+
+public class Node
 {
-    public class Node
+    public Node(string word)
     {
-        public Node(string word)
-        {
-            if (string.IsNullOrWhiteSpace(word)) throw new ArgumentNullException(nameof(word));
-            
-            Word = word;
-        }
+        if (string.IsNullOrWhiteSpace(word)) throw new ArgumentNullException(nameof(word));
 
-        public string Word { get; init; }
-
-        public Node? Parent { get; init; }
+        Word = word;
     }
+
+    public string Word { get; init; }
+
+    public Node? Parent { get; init; }
 }

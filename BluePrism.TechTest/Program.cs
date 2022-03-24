@@ -1,9 +1,9 @@
-﻿using BluePrism.TechTest.Library.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
-using CommandLine;
+﻿using System.IO.Abstractions;
 using BluePrism.TechTest.Console;
 using BluePrism.TechTest.Library;
-using System.IO.Abstractions;
+using BluePrism.TechTest.Library.Interfaces;
+using CommandLine;
+using Microsoft.Extensions.DependencyInjection;
 
 var parserResult = Parser.Default.ParseArguments<Options>(args);
 await parserResult.WithParsedAsync(RunOptionsAsync);
@@ -21,11 +21,11 @@ static async Task RunOptionsAsync(Options options)
     try
     {
         ValidateArgs(options);
-    
+
         var shortestPath = await serviceProvider.GetRequiredService<IWordService>()
             .FindShortestPathAsync(options.Dictionary, options.StartWord, options.EndWord, options.Output);
 
-        PrintOutput(shortestPath, options);        
+        PrintOutput(shortestPath, options);
     }
     catch (Exception ex)
     {
@@ -58,7 +58,7 @@ static void PrintOutput(string[] shortestPath, Options options)
         }
 
         if (string.IsNullOrWhiteSpace(options.Output)) return;
-        
+
         Console.WriteLine(string.Empty);
         Console.WriteLine($"Output written to file {options.Output}");
     }

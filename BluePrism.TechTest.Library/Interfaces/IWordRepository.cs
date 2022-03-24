@@ -1,9 +1,8 @@
-﻿namespace BluePrism.TechTest.Library.Interfaces
-{
-    public interface IWordRepository
-    {
-        string[] Words { get; }
+﻿namespace BluePrism.TechTest.Library.Interfaces;
 
-        Task LoadFromFileAsync(string path, int wordLength);
-    }
+public interface IWordRepository
+{
+    string[] Words { get; }
+
+    Task LoadFromFileAsync(string path, int wordLength);
 }

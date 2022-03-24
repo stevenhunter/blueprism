@@ -1,31 +1,30 @@
-﻿using FluentAssertions;
-using Moq;
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using Xunit;
-using BluePrism.TechTest.Library.Models;
 using AutoFixture.Xunit2;
+using BluePrism.TechTest.Library.Models;
+using FluentAssertions;
+using Xunit;
 
-namespace BluePrism.TechTest.Library.UnitTests.Models
+namespace BluePrism.TechTest.Library.UnitTests.Models;
+
+[ExcludeFromCodeCoverage]
+public class NodeTests
 {
-    [ExcludeFromCodeCoverage]
-    public class NodeTests
+    [Theory]
+    [AutoData]
+    public void Ctor_GivenValidArguments_DoesNotThrow(string word)
     {
-        [Theory, AutoData]
-        public void Ctor_GivenValidArguments_DoesNotThrow(string word)
-        {
-            var act = new Action(() => _ = new Node(word));
+        var act = new Action(() => _ = new Node(word));
 
-            act.Should().NotThrow();
-        }
+        act.Should().NotThrow();
+    }
 
-        [Fact]
-        public void Ctor_GivenNullWord_ThrowsArgumentNullException()
-        {
-            var act = new Action(() => _ = new Node(null!));
+    [Fact]
+    public void Ctor_GivenNullWord_ThrowsArgumentNullException()
+    {
+        var act = new Action(() => _ = new Node(null!));
 
-            act.Should().Throw<ArgumentNullException>()
-                .WithMessage("Value cannot be null. (Parameter 'word')");
-        }
+        act.Should().Throw<ArgumentNullException>()
+            .WithMessage("Value cannot be null. (Parameter 'word')");
     }
 }

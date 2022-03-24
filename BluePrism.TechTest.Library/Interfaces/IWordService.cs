@@ -1,8 +1,7 @@
-﻿namespace BluePrism.TechTest.Library.Interfaces
+﻿namespace BluePrism.TechTest.Library.Interfaces;
+
+public interface IWordService
 {
-    public interface IWordService
-    {
-        Task<string[]> FindShortestPathAsync(
-            string inputFileName, string startWord, string endWord, string outputFileName);
-    }
+    Task<string[]> FindShortestPathAsync(
+        string inputFileName, string startWord, string endWord, string outputFileName);
 }

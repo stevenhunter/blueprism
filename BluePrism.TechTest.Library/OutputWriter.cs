@@ -1,22 +1,21 @@
-﻿using BluePrism.TechTest.Library.Interfaces;
-using System.IO.Abstractions;
+﻿using System.IO.Abstractions;
+using BluePrism.TechTest.Library.Interfaces;
 
-namespace BluePrism.TechTest.Library
+namespace BluePrism.TechTest.Library;
+
+public class OutputWriter : IOutputWriter
 {
-    public class OutputWriter : IOutputWriter
+    private readonly IFileSystem _fileSystem;
+
+    public OutputWriter(IFileSystem fileSystem)
     {
-        private readonly IFileSystem _fileSystem;
+        ArgumentNullException.ThrowIfNull(fileSystem);
 
-        public OutputWriter(IFileSystem fileSystem)
-        {
-            ArgumentNullException.ThrowIfNull(fileSystem);
+        _fileSystem = fileSystem;
+    }
 
-            _fileSystem = fileSystem;
-        }
-
-        public async Task WriteToFileAsync(string path, IEnumerable<string> output)
-        {
-            await _fileSystem.File.WriteAllLinesAsync(path, output);
-        }
+    public async Task WriteToFileAsync(string path, IEnumerable<string> output)
+    {
+        await _fileSystem.File.WriteAllLinesAsync(path, output);
     }
 }
