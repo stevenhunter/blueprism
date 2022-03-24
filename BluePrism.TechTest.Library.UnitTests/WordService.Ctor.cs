@@ -23,7 +23,7 @@ namespace BluePrism.TechTest.Library.UnitTests
         public void Ctor_GivenNullOutputWriter_ThrowsArgumentNullException()
         {
             var act = new Action(() => _ = new WordService(
-                Mock.Of<IWordRepository>(), null));
+                Mock.Of<IWordRepository>(), null!));
 
             act.Should().Throw<ArgumentNullException>()
                 .WithMessage("Value cannot be null. (Parameter 'outputWriter')");
@@ -33,7 +33,7 @@ namespace BluePrism.TechTest.Library.UnitTests
         public void Ctor_GivenNullWordRepository_ThrowsArgumentNullException()
         {
             var act = new Action(() => _ = new WordService(
-                null, Mock.Of<IOutputWriter>()));
+                null!, Mock.Of<IOutputWriter>()));
 
             act.Should().Throw<ArgumentNullException>()
                 .WithMessage("Value cannot be null. (Parameter 'wordRepository')");

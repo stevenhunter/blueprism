@@ -4,16 +4,16 @@ namespace BluePrism.TechTest.Console
 {
     public class Options
     {
-        [Option('d', "dictionary", Required = true, HelpText = "Dictionary file name.")]
+        [Option('i', "inputFile", Required = true, HelpText = "Input dictionary file name.")]
         public string Dictionary { get; set; } = default!;
 
-        [Option('s', "startword", Required = true, HelpText = "Start word.")]
+        [Option('s', "startWord", Required = true, HelpText = "Start word.")]
         public string StartWord { get; set; } = default!;
 
-        [Option('e', "endword", Required = true, HelpText = "End word.")]
+        [Option('e', "endWord", Required = true, HelpText = "End word.")]
         public string EndWord { get; set; } = default!;
 
-        [Option('o', "output", Required = false, HelpText = "Output file name.")]
+        [Option('o', "outputFile", Required = false, HelpText = "Output file name.")]
         public string Output { get; set; } = default!;
     }
 }

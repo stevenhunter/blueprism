@@ -21,7 +21,7 @@ namespace BluePrism.TechTest.Library.UnitTests
         [Fact]
         public void Ctor_GivenNullFileSystem_ThrowsArgumentNullException()
         {
-            var act = new Action(() => _ = new WordRepository(null));
+            var act = new Action(() => _ = new WordRepository(null!));
 
             act.Should().Throw<ArgumentNullException>()
                 .WithMessage("Value cannot be null. (Parameter 'fileSystem')");

@@ -22,7 +22,7 @@ namespace BluePrism.TechTest.Library.UnitTests.Models
         [Fact]
         public void Ctor_GivenNullWord_ThrowsArgumentNullException()
         {
-            var act = new Action(() => _ = new Node(null));
+            var act = new Action(() => _ = new Node(null!));
 
             act.Should().Throw<ArgumentNullException>()
                 .WithMessage("Value cannot be null. (Parameter 'word')");

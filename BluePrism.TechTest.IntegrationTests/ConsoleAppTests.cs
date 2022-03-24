@@ -27,7 +27,7 @@ namespace BluePrism.TechTest.IntegrationTests
             var process = Process.Start(new ProcessStartInfo
             {
                 FileName = ApplicationExeName,
-                Arguments = $"-d {dictionaryFilename} -s {startWord} -e {endWord} -o {OutputFileName}"
+                Arguments = $"-i {dictionaryFilename} -s {startWord} -e {endWord} -o {OutputFileName}"
             });
             process?.WaitForExit();
 
@@ -46,7 +46,7 @@ namespace BluePrism.TechTest.IntegrationTests
             var process = Process.Start(new ProcessStartInfo
             {
                 FileName = ApplicationExeName,
-                Arguments = $"-d missing.txt -s start -e end -o {OutputFileName}"
+                Arguments = $"-i missing.txt -s start -e end -o {OutputFileName}"
             });
             process?.WaitForExit();
 
