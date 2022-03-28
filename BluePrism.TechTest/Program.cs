@@ -20,8 +20,6 @@ static async Task RunOptionsAsync(Options options)
 
     try
     {
-        ValidateArgs(options);
-
         var shortestPath = await serviceProvider.GetRequiredService<IWordService>()
             .FindShortestPathAsync(options.Dictionary, options.StartWord, options.EndWord, options.Output);
 
@@ -34,12 +32,6 @@ static async Task RunOptionsAsync(Options options)
     }
 
     Environment.Exit(0);
-}
-
-static void ValidateArgs(Options options)
-{
-    if (options.StartWord.Length != options.EndWord.Length)
-        throw new ArgumentException("Start and end words must be of equal length");
 }
 
 static void PrintOutput(string[] shortestPath, Options options)
